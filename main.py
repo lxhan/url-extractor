@@ -3,7 +3,9 @@ from selenium.webdriver.chrome.options import Options
 import requests
 import os
 from aiogram import Bot, Dispatcher, executor, types, utils
+from dotenv import load_dotenv
 
+load_dotenv()
 
 API_VIDEO_URL = os.environ.get("API_VIDEO_URL")
 TG_API_TOKEN = os.environ.get("TG_API_TOKEN")
@@ -20,15 +22,15 @@ driver = webdriver.Chrome(options=chrome_options)
 
 
 @dp.message_handler(commands=["start"])
-async def send_welcome(message):
+async def start(message: types.Message):
     await message.reply("Отправь мне ссылку с видео")
 
 
-@dp.message_handler()
+@dp.message_handler(commands=["bulk"])
 async def ask_for_url(message: types.Message):
     try:
-        await message.reply("Дай мне немного времени")
         input_url = message.text
+        await message.reply("Дай мне немного времени")
         driver.get(input_url)
         video_url = ""
         pk = ""

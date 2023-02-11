@@ -7,7 +7,8 @@ RUN apt update -y && apt upgrade -y \
   && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
   && apt update -y \
   && apt install google-chrome-stable -y \
-  && wget "https://chromedriver.storage.googleapis.com/94.0.4606.61/chromedriver_linux64.zip" \
+  && DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
+  && wget "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip" \
   && unzip chromedriver_linux64.zip \
   && mv chromedriver /usr/bin/chromedriver \
   && chmod +x /usr/bin/chromedriver
